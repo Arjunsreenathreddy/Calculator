@@ -29,7 +29,7 @@ def equal():
 def clear():
     global var_str
     var_str = " "
-    var.set("")
+    var.set(var_str)
 
 buttons = [('1',0,0),('2',0,1),('3',0,2),
            ('4',1,0),('5',1,1),('6',1,2),

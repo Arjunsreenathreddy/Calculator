@@ -41,9 +41,9 @@ buttons = [('1',0,0),('2',0,1),('3',0,2),
 
 for text, row, column in buttons:
     if text == "=":
-        button = Button(button_box, text="=", command=equal)
+        button = Button(button_box, text="=",width=10, height= 5, font= 16, command=equal)
     elif text == "Cls":
-        button = Button(button_box, text="Cls", command= clear)
+        button = Button(button_box, text="Cls",width=10, height= 5, font= 16, command= clear)
     else:
         button = Button(button_box,text= text,relief=RAISED, width=10, height= 5, font= 16, command= lambda num =text: button_press(num))
     button.grid(row=row, column=column,padx=35,pady=10, sticky = "nsew")

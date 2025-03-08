@@ -1,62 +1,57 @@
-import tkinter as tk
+import tkinter
+from tkinter import *
+window =Tk()
+window.geometry("600x800")
 
+var =StringVar()
+label = Label(window,textvariable=var, background= "white", width=200,height=10, borderwidth=12,relief="sunken",font=58)
+label.pack(expand = True)
+
+button_box = Frame(window,height=200,width=500, bg="White")
+button_box.pack(fill= "both", expand = True)
+
+var_str =" "
 def button_press(num):
-    global equation_text
-    equation_text = equation_text+str(num)
-    equation_label.set(equation_text)
-def equals():
-    global equation_text
+    global var_str
+    var_str =var_str+ str(num)
+    var.set(var_str)
+
+def equal():
+    global var_str
     try:
-        total = str(eval(equation_text))
-        equation_label.set(total)
-        equation_text =total
+        total = str(eval(var_str))
+        var.set(total)
     except ZeroDivisionError:
-        equation_label.set("arithemetic error")
-        equation_text =""
+        var.set("Error")
     except SyntaxError:
-        equation_label.set("Synatax Error")
-        equation_text =""
+        var.set("Syntax Error")
+
 def clear():
-    global equation_text
-    equation_label.set("")
-    equation_text = ""
+    global var_str
+    var_str = " "
+    var.set("")
 
-root = tk.Tk()
-root.title("Calculating Program")
-root.geometry("600x600")
+buttons = [('1',0,0),('2',0,1),('3',0,2),
+           ('4',1,0),('5',1,1),('6',1,2),
+           ('7',2,0),('8',2,1),('9',2,2),
+           ('0',3,0),('+',3,1),('-',0,3),
+           ('/',1,3),('*',2,3),('=',3,3),
+           ("Cls",3,2)]
 
-equation_text = ""
-equation_label = tk.StringVar()
+for text, row, column in buttons:
+    if text == "=":
+        button = Button(button_box, text="=", command=equal)
+    elif text == "Cls":
+        button = Button(button_box, text="Cls", command= clear)
+    else:
+        button = Button(button_box,text= text,relief=RAISED, width=10, height= 5, font= 16, command= lambda num =text: button_press(num))
+    button.grid(row=row, column=column,padx=35,pady=10, sticky = "nsew")
+    
+# Make the button_box expandable
+for i in range(4):  # Assuming 4 columns
+    button_box.columnconfigure(i, weight=1)
 
-# Label with padding
-label = tk.Label(root, textvariable=equation_label, font=("Arial", 22), background="white", width=30, height=2)
-label.pack(padx=30, pady=30)
+for i in range(5):  # Assuming 5 rows
+    button_box.rowconfigure(i, weight=1)
 
-class Button_Widget(tk.Button):
-    def __init__(self, master, text, command):
-        super().__init__(master, text=text, height=2, width=4, font=("Arial", 18), command=command)
-
-# Frame with padding
-frame = tk.Frame(root)
-frame.pack(padx=10, pady=10)
-# Button layout (text, row, col)
-buttons = [
-    ("1", 0, 0), ("2", 0, 1), ("3", 0, 2), ("+", 0, 3),
-    ("4", 1, 0), ("5", 1, 1), ("6", 1, 2), ("-", 1, 3),
-    ("7", 2, 0), ("8", 2, 1), ("9", 2, 2), ("*", 2, 3),
-    (".", 3, 0), ("0", 3, 1),  ("/", 3, 3),
-]
-# Create buttons dynamically
-for text, row, col in buttons:
-    btn = Button_Widget(frame, text, lambda t=text: button_press(t))
-    btn.grid(row=row, column=col, padx=5, pady=5)
-
-# Equal button
-Equal_button = Button_Widget(frame, "=", lambda :equals())
-Equal_button.grid(row=3, column=2)
-
-# Clear button spanning columns 0 to 3
-clear_button = Button_Widget(frame, "Clear", lambda: clear())
-clear_button.grid(row=4, column=0,columnspan=4,padx=5, pady=5,sticky="nsew")
-
-root.mainloop()
+mainloop()

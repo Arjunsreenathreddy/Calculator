@@ -2,6 +2,7 @@ import tkinter
 from tkinter import *
 window =Tk()
 window.geometry("600x800")
+window.title("Basic_Calculator")
 
 var =StringVar()
 label = Label(window,textvariable=var, background= "white", width=200,height=10, borderwidth=12,relief="sunken",font=58)
@@ -46,7 +47,7 @@ for text, row, column in buttons:
     else:
         button = Button(button_box,text= text,relief=RAISED, width=10, height= 5, font= 16, command= lambda num =text: button_press(num))
     button.grid(row=row, column=column,padx=35,pady=10, sticky = "nsew")
-    
+
 # Make the button_box expandable
 for i in range(4):  # Assuming 4 columns
     button_box.columnconfigure(i, weight=1)
